@@ -21,10 +21,34 @@ public class DAO {
 	public DAO(DataSource dataSource) {
 		this.myDataSource = dataSource;
 	}
+        
+        
+        /**
+         * Permet d'avoir le code d'un client en fonction de Contact  
+         * @return Code du Client
+         * @throws java.sql.SQLException renvoyées par JDBC
+         */
+        public String codeClient(String contact) throws SQLException {
+            String result = null;;
+            String sql = "SELECT CODE FROM CLIENT WHERE CONTACT= ?";
+            
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setString(1, contact);
+                        try (ResultSet resultSet = stmt.executeQuery()) {
+				if (resultSet.next()) {
+					result = resultSet.getString("LastName");
+				}
+			}
+			
+		}
+            
+            return result;
+        }
 
 	/**
 	 * Contenu de la table DISCOUNT_CODE
-	 * @return Liste des discount codes
+	 * @return Liste des clients
 	 * @throws SQLException renvoyées par JDBC
 	 */
 	public List<DiscountCode> allCodes() throws SQLException {
@@ -44,6 +68,7 @@ public class DAO {
 		}
 		return result;
 	}
+        
 
 	/**
 	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE

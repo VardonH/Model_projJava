@@ -30,7 +30,7 @@ public class DAO {
          */
         public String codeClient(String contact) throws SQLException {
             String result = null;;
-            String sql = "SELECT CODE FROM CLIENT WHERE CONTACT= ?";
+            String sql = "SELECT CODE FROM CLIENT WHERE CONTACT= '?'";
             
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -45,7 +45,55 @@ public class DAO {
             
             return result;
         }
+        
+        /**
+         * permet d'avoir une liste de produits dont le nom possède le mot clé entré en argument
+         * @return ou liste de produits
+         * @throws java.sql.SQLException renvoyées par JDBC
+         */
+        public List<Produit> selectProduct(String nom) throws SQLException {
+            List<Produit> result = LinkedList<>();
+            
+            String sql = "SELECT * FROM PRODUIT WHERE Nom LIKE '%?%'";
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                            
+                        }
+            }
+            return result;
+        }
+            
+        /**
+         * 
+         * @throws SQLException renvoyées par JDBC
+         */
+        public List<Produit> allProducts(String cat) throws SQLException {
+            
+            List<Produit> result = new LinkedList<>();
+            
+            String sql = "SELECT * FROM PRODUIT INNER JOIN CATEGORIE ON PRODUIT.CATEGORIE = CATEGORIE.CODE WHERE LIBELLE LIKE '%?%'"";;
 
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                            String nProduit=rs.getString("NOM");
+                            int fournisseur=rs.getInt("FOURNISSEUR");
+                            int categorie=rs.getInt("CATEGORIE");
+                            float prixUnitaire=rs.getFloat("PRIX_UNITAIRE");
+                            float quantiteParUnite=rs.getFloat("QAUNTITE_PAR_UNITE");
+                            int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
+                            int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
+                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
+                            boolean indisponible;
+                            if rs.getInt();
+                        }
+            }
+            return result;
+        }
+        
 	/**
 	 * Contenu de la table DISCOUNT_CODE
 	 * @return Liste des clients

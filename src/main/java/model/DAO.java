@@ -52,7 +52,8 @@ public class DAO {
          * @throws java.sql.SQLException renvoyées par JDBC
          */
         public List<Produit> selectProduct(String nom) throws SQLException {
-            List<Produit> result = LinkedList<>();
+            
+            List<Produit> result = new LinkedList<>();
             
             String sql = "SELECT * FROM PRODUIT WHERE Nom LIKE '%?%'";
             try (Connection connection = myDataSource.getConnection(); 
@@ -73,7 +74,7 @@ public class DAO {
             
             List<Produit> result = new LinkedList<>();
             
-            String sql = "SELECT * FROM PRODUIT INNER JOIN CATEGORIE ON PRODUIT.CATEGORIE = CATEGORIE.CODE WHERE LIBELLE LIKE '%?%'"";;
+            String sql = "SELECT * FROM PRODUIT INNER JOIN CATEGORIE ON PRODUIT.CATEGORIE = CATEGORIE.CODE WHERE LIBELLE LIKE '%?%'";;
 
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
